@@ -43,7 +43,7 @@ const GenreSelector = ({ navigation }: Props) => {
     return (
       <View style={styles.container}>
         <StatusBar style="auto" />
-        <Text>What type of movie do you feel like watching?</Text>
+        <Text>Select the genres that best describe the movie you feel like watching</Text>
         <View style={styles.genreList}>
           {genres.map((g) => (
             <Chip
