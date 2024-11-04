@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, TextInput, View } from "react-native";
-import { Genre } from "../utils/types";
-import genreService from "../services/genreService";
-import testData from "../utils/testData";
+import { StyleSheet, Text, View } from "react-native";
 import { Button, Chip } from "react-native-paper";
+import { StatusBar } from "expo-status-bar";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { Genre, HomeScreenStackParamlist } from "../../utils/types";
+// import testData from "../../utils/testData";
+import genreService from "../../services/genreService";
 
-const GenreSelector = () => {
+type Props = NativeStackScreenProps<HomeScreenStackParamlist, "GenreSelector">;
+
+const GenreSelector = ({ navigation }: Props) => {
   const [genres, setGenres] = useState<Genre[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<Genre[]>([]);
 
@@ -31,9 +35,14 @@ const GenreSelector = () => {
       : setSelectedGenres((g) => g.concat(genre));
   };
 
+  const handleSubmit = () => {
+    navigation.navigate("MovieSwiper", { genres: selectedGenres });
+  };
+
   if (genres) {
     return (
       <View style={styles.container}>
+        <StatusBar style="auto" />
         <Text>What type of movie do you feel like watching?</Text>
         <View style={styles.genreList}>
           {genres.map((g) => (
@@ -47,7 +56,9 @@ const GenreSelector = () => {
             </Chip>
           ))}
         </View>
-        <Button mode="contained">Continue</Button>
+        <Button mode="contained" onPress={handleSubmit}>
+          Continue
+        </Button>
       </View>
     );
   }
