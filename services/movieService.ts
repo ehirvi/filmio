@@ -6,7 +6,7 @@ const API_URL = process.env.EXPO_PUBLIC_API_FILTER_URL;
 
 const getMoviesByGenre = async (genres: Genre[], page = 1) => {
   const genresStringified = genres.map((g) => g.id).join(",");
-  const query = `?api_key=${API_KEY}&page=${page}&with_genres=${genresStringified}`;
+  const query = `?api_key=${API_KEY}&page=${page}&with_genres=${genresStringified}&sort_by=vote_count.desc`;
   const { data } = await axios.get<MoviesFilteredByGenre>(`${API_URL}${query}`);
   return data.results;
 };

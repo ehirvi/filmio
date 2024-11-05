@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import movieService from "../../services/movieService";
 import MovieCard from "../../components/MovieCard";
 import { Button, FAB } from "react-native-paper";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 type Props = NativeStackScreenProps<HomeScreenStackParamlist, "MovieSwiper">;
 
@@ -32,16 +32,20 @@ const MovieSwiper = ({ route }: Props) => {
     return (
       <View>
         <MovieCard movie={movies[0]} />
-        <View>
-          <FAB icon="close-thick" onPress={handleReject} />
-          <FAB icon="heart" />
+        <View style={styles.buttonRow}>
+          <FAB icon="close-thick" size="large" onPress={handleReject} />
+          <FAB icon="heart" size="large" />
         </View>
-        {/* <Button mode="contained" onPress={handleReject}>
-          X
-        </Button> */}
       </View>
     );
   }
 };
+
+const styles = StyleSheet.create({
+  buttonRow: {
+    flexDirection: "row",
+    justifyContent: "space-around"
+  }
+})
 
 export default MovieSwiper;
