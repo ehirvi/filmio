@@ -1,6 +1,6 @@
 import { Card, Surface } from "react-native-paper";
 import { MoviesFilteredByGenre } from "../utils/types";
-import { Image, StyleSheet, Text } from "react-native";
+import { Image, StyleSheet } from "react-native";
 import { POSTER_URL } from "../utils/constants";
 
 interface Props {

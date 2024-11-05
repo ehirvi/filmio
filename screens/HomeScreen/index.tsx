@@ -5,7 +5,7 @@ import MovieSwiper from "./MovieSwiper";
 
 const Stack = createNativeStackNavigator<HomeScreenStackParamlist>();
 
-const Home = () => {
+const HomeScreen = () => {
   return (
     <Stack.Navigator initialRouteName="GenreSelector">
       <Stack.Screen
@@ -22,4 +22,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomeScreen;

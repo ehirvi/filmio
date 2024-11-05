@@ -6,7 +6,7 @@ import {
 import { useEffect, useState } from "react";
 import movieService from "../../services/movieService";
 import MovieCard from "../../components/MovieCard";
-import { Button, FAB } from "react-native-paper";
+import { FAB } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 
 type Props = NativeStackScreenProps<HomeScreenStackParamlist, "MovieSwiper">;
@@ -44,8 +44,8 @@ const MovieSwiper = ({ route }: Props) => {
 const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: "row",
-    justifyContent: "space-around"
-  }
-})
+    justifyContent: "space-around",
+  },
+});
 
 export default MovieSwiper;
