@@ -1,20 +1,23 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import {
+  DiscoverMovieResponse,
   HomeScreenStackParamlist,
-  MoviesFilteredByGenre,
 } from "../../utils/types";
 import { useEffect, useState } from "react";
 import movieService from "../../services/movieService";
 import MovieCard from "../../components/MovieCard";
 import { FAB } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
+import { saveMovie } from "../../utils/sqlite";
+import { useSQLiteContext } from "expo-sqlite";
 
 type Props = NativeStackScreenProps<HomeScreenStackParamlist, "MovieSwiper">;
 
 const MovieSwiper = ({ route }: Props) => {
   const { genres } = route.params;
-  const [movies, setMovies] = useState<MoviesFilteredByGenre["results"]>();
+  const [movies, setMovies] = useState<DiscoverMovieResponse["results"]>();
   const [page, setPage] = useState(1);
+  const db = useSQLiteContext();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -24,8 +27,14 @@ const MovieSwiper = ({ route }: Props) => {
     fetchMovies();
   }, []);
 
-  const handleReject = () => {
-    setMovies((movies) => movies!.slice(1));
+  const handleReject = (movies: DiscoverMovieResponse["results"]) => {
+    setMovies(movies.slice(1));
+  };
+
+  const handleAccept = async (movies: DiscoverMovieResponse["results"]) => {
+    const movieId = movies[0].id;
+    await saveMovie(db, movieId, false);
+    setMovies(movies.slice(1));
   };
 
   if (movies) {
@@ -33,8 +42,16 @@ const MovieSwiper = ({ route }: Props) => {
       <View>
         <MovieCard movie={movies[0]} />
         <View style={styles.buttonRow}>
-          <FAB icon="close-thick" size="large" onPress={handleReject} />
-          <FAB icon="heart" size="large" />
+          <FAB
+            icon="close-thick"
+            size="large"
+            onPress={() => handleReject(movies)}
+          />
+          <FAB
+            icon="heart"
+            size="large"
+            onPress={() => void handleAccept(movies)}
+          />
         </View>
       </View>
     );

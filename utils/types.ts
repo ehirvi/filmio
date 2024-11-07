@@ -11,7 +11,7 @@ export interface Genre {
 /**
  * The response format of the API endpoint
  */
-export interface MoviesFilteredByGenre {
+export interface DiscoverMovieResponse {
   page: number;
   results: Array<{
     adult: boolean;
@@ -31,4 +31,19 @@ export interface MoviesFilteredByGenre {
   }>;
   total_pages: number;
   total_results: number;
+}
+
+/**
+ * Movie data from the API is formatted to this type before saving to local context
+ */
+export interface Movie {
+  id: number;
+  title: string;
+  original_title: string;
+  original_language: string;
+  release_date: string;
+  overview: string;
+  genre_ids: Array<Genre["id"]>;
+  poster_path: string;
+  backdrop_path: string;
 }
