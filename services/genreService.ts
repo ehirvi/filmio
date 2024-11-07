@@ -1,13 +1,11 @@
 import axios from "axios";
-import { API_KEY } from "../utils/constants";
+import { API_KEY, API_URL } from "../utils/constants";
 import { Genre } from "../utils/types";
 
-const API_URL = process.env.EXPO_PUBLIC_API_GENRE_URL;
-
 const getAll = async () => {
-  const { data } = await axios.get<{ genres: Genre[] }>(
-    `${API_URL}?api_key=${API_KEY}`
-  );
+  const url = `${API_URL}genre/movie/list`;
+  const query = `?api_key=${API_KEY}`;
+  const { data } = await axios.get<{ genres: Genre[] }>(`${url + query}`);
   return data.genres;
 };
 

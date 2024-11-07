@@ -1,4 +1,5 @@
 import { SQLiteDatabase } from "expo-sqlite";
+import { LocalMovieData } from "./types";
 
 export const initDb = async (db: SQLiteDatabase) => {
   await db.execAsync(
@@ -20,6 +21,23 @@ export const saveMovie = async (
   } catch (err: unknown) {
     if (err instanceof Error) {
       console.error("Could not save item", err);
+    }
+  }
+};
+
+export const getUpdatedMovieList = async (
+  db: SQLiteDatabase,
+  hasWatched: boolean
+) => {
+  try {
+    const movies = await db.getAllAsync<LocalMovieData>(
+      "SELECT * FROM movie WHERE has_watched = (?)",
+      hasWatched ? 1 : 0
+    );
+    return movies;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error("Could not get items", err);
     }
   }
 };
