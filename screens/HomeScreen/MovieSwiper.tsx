@@ -25,16 +25,20 @@ const MovieSwiper = ({ route }: Props) => {
       setMovies(results);
     };
     fetchMovies();
-  }, []);
+  }, [page]);
 
-  const handleReject = (movies: DiscoverMovieResponse["results"]) => {
-    setMovies(movies.slice(1));
+  const removeFromQueue = (movies: DiscoverMovieResponse["results"]) => {
+    if (movies.length === 1) {
+      setPage((page) => page + 1);
+    } else {
+      setMovies(movies.slice(1));
+    }
   };
 
   const handleAccept = async (movies: DiscoverMovieResponse["results"]) => {
     const movieId = movies[0].id;
     await saveMovie(db, movieId, false);
-    setMovies(movies.slice(1));
+    removeFromQueue(movies);
   };
 
   if (movies) {
@@ -45,7 +49,7 @@ const MovieSwiper = ({ route }: Props) => {
           <FAB
             icon="close-thick"
             size="large"
-            onPress={() => handleReject(movies)}
+            onPress={() => removeFromQueue(movies)}
           />
           <FAB
             icon="heart"
