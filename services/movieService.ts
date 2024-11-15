@@ -14,7 +14,6 @@ const findOneById = async (id: number) => {
   const url = `${API_URL}movie/${id}`;
   const query = `?api_key=${API_KEY}`;
   const { data } = await axios.get(`${url + query}`);
-  // console.log(data);
   return data;
 };
 

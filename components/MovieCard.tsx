@@ -1,14 +1,15 @@
 import { Card, Surface } from "react-native-paper";
-import { MoviesFilteredByGenre } from "../utils/types";
 import { Image, StyleSheet } from "react-native";
 import { POSTER_URL } from "../utils/constants";
+import { DiscoverMovieResponse } from "../utils/types";
+import { parseReleaseYear } from "../utils/helpers";
 
 interface Props {
-  movie: MoviesFilteredByGenre["results"][number];
+  movie: DiscoverMovieResponse["results"][number];
 }
 
 const MovieCard = ({ movie }: Props) => {
-  const releaseYear = movie.release_date.slice(0, 4);
+  const releaseYear = parseReleaseYear(movie.release_date);
 
   return (
     <Card style={styles.card}>

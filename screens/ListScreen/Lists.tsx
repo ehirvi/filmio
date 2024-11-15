@@ -1,9 +1,11 @@
 import { useSQLiteContext } from "expo-sqlite";
 import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { SegmentedButtons } from "react-native-paper";
 import { getUpdatedMovieList } from "../../utils/sqlite";
 import movieService from "../../services/movieService";
+import MovieList from "../../components/MovieList";
+import { Movie } from "../../utils/types";
 
 const Lists = () => {
   const [listType, setListType] = useState("watch");
@@ -40,10 +42,8 @@ const Lists = () => {
           },
         ]}
       />
-      <FlatList
-        data={movies}
-        renderItem={({ item }) => <Text>{item.title}</Text>}
-      />
+      {/* FIX TYPE */}
+      <MovieList movies={movies as Movie[]} />
     </View>
   );
 };
