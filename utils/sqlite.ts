@@ -26,10 +26,7 @@ export const save = async (
   }
 };
 
-export const getAll = async (
-  db: SQLiteDatabase,
-  hasWatched?: boolean
-) => {
+export const getAll = async (db: SQLiteDatabase, hasWatched?: boolean) => {
   try {
     if (hasWatched !== undefined) {
       const movies = await db.getAllAsync<LocalMovieData>(
@@ -38,6 +35,8 @@ export const getAll = async (
       );
       return movies;
     }
+    const movies = await db.getAllAsync<LocalMovieData>("SELECT * FROM movie");
+    return movies;
   } catch (err: unknown) {
     if (err instanceof Error) {
       console.error("Could not get items", err);
