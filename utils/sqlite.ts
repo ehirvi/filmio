@@ -7,17 +7,18 @@ export const initDb = async (db: SQLiteDatabase) => {
   );
 };
 
-export const saveMovie = async (
+export const save = async (
   db: SQLiteDatabase,
   movieId: number,
   hasWatched: boolean
 ) => {
   try {
-    await db.runAsync(
+    const res = await db.runAsync(
       "INSERT INTO movie (movie_id, has_watched) VALUES (?, ?)",
       movieId,
-      hasWatched ? 1 : 0
+      hasWatched
     );
+    return res.lastInsertRowId;
   } catch (err: unknown) {
     if (err instanceof Error) {
       console.error("Could not save item", err);
@@ -25,16 +26,18 @@ export const saveMovie = async (
   }
 };
 
-export const getUpdatedMovieList = async (
+export const getAll = async (
   db: SQLiteDatabase,
-  hasWatched: boolean
+  hasWatched?: boolean
 ) => {
   try {
-    const movies = await db.getAllAsync<LocalMovieData>(
-      "SELECT * FROM movie WHERE has_watched = (?)",
-      hasWatched ? 1 : 0
-    );
-    return movies;
+    if (hasWatched !== undefined) {
+      const movies = await db.getAllAsync<LocalMovieData>(
+        "SELECT * FROM movie WHERE has_watched = (?)",
+        hasWatched
+      );
+      return movies;
+    }
   } catch (err: unknown) {
     if (err instanceof Error) {
       console.error("Could not get items", err);

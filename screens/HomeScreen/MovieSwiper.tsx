@@ -8,8 +8,8 @@ import movieService from "../../services/movieService";
 import MovieCard from "../../components/MovieCard";
 import { FAB } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
-import { saveMovie } from "../../utils/sqlite";
 import { useSQLiteContext } from "expo-sqlite";
+import useMovieStore from "../../hooks/useStore";
 
 type Props = NativeStackScreenProps<HomeScreenStackParamlist, "MovieSwiper">;
 
@@ -18,6 +18,8 @@ const MovieSwiper = ({ route }: Props) => {
   const [movies, setMovies] = useState<DiscoverMovieResponse["results"]>();
   const [page, setPage] = useState(1);
   const db = useSQLiteContext();
+  const getSavedMovies = useMovieStore((state) => state.getSavedMovies);
+  const saveMovie = useMovieStore((state) => state.saveMovie);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -35,9 +37,9 @@ const MovieSwiper = ({ route }: Props) => {
     }
   };
 
-  const handleAccept = async (movies: DiscoverMovieResponse["results"]) => {
+  const handleAccept = (movies: DiscoverMovieResponse["results"]) => {
     const movieId = movies[0].id;
-    await saveMovie(db, movieId, false);
+    saveMovie(db, movieId, false);
     removeFromQueue(movies);
   };
 
