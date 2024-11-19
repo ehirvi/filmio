@@ -3,7 +3,7 @@ import {
   DiscoverMovieResponse,
   HomeScreenStackParamlist,
 } from "../../utils/types";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import movieService from "../../services/movieService";
 import MovieCard from "../../components/MovieCard";
 import { ActivityIndicator, FAB, MD2Colors } from "react-native-paper";
@@ -15,34 +15,46 @@ type Props = NativeStackScreenProps<HomeScreenStackParamlist, "MovieSwiper">;
 
 const MovieSwiper = ({ route }: Props) => {
   const { genres } = route.params;
+  const page = useRef(1);
   const [movies, setMovies] = useState<DiscoverMovieResponse["results"]>([]);
-  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   const db = useSQLiteContext();
-  const getSavedMovies = useMovieStore((state) => state.getSavedMovies);
+  const savedMovies = useMovieStore((state) => state.movies);
   const saveMovie = useMovieStore((state) => state.saveMovie);
 
   useEffect(() => {
-    const fetchMovies = async () => {
-      setLoading(true);
-      const results = await movieService.getMoviesByGenre(genres, page);
-      setMovies((m) => m.concat(results));
-      setLoading(false);
-    };
     fetchMovies();
-  }, [page]);
+  }, []);
 
-  const removeFromQueue = (movies: DiscoverMovieResponse["results"]) => {
-    if (movies.length === 2) {
-      setPage((page) => page + 1);
-    }
-    setMovies(movies.slice(1));
+  const fetchMovies = async () => {
+    setLoading(true);
+    const results = await movieService.getMoviesByGenre(genres, page.current);
+    setMovies((arr) => arr.concat(results));
+    setLoading(false);
   };
 
-  const handleAccept = (movies: DiscoverMovieResponse["results"]) => {
+  const removeFromQueue = () => {
+    if (movies.length <= 2) {
+      page.current += 1;
+      fetchMovies();
+    }
+    setMovies((arr) => arr.slice(1));
+  };
+
+  const handleAccept = () => {
     const movieId = movies[0].id;
     saveMovie(db, movieId, false);
-    removeFromQueue(movies);
+    removeFromQueue();
+  };
+
+  const filterMovie = () => {
+    const movieId = movies[0].id;
+    if (savedMovies.find((movie) => movie.movie_id === movieId)) {
+      console.log(movies[0].title);
+      removeFromQueue();
+      return movies[1];
+    }
+    return movies[0];
   };
 
   return (
@@ -57,18 +69,10 @@ const MovieSwiper = ({ route }: Props) => {
         </View>
       ) : (
         <View>
-          <MovieCard movie={movies[0]} />
+          <MovieCard movie={filterMovie()} />
           <View style={styles.buttonRow}>
-            <FAB
-              icon="close-thick"
-              size="large"
-              onPress={() => removeFromQueue(movies)}
-            />
-            <FAB
-              icon="heart"
-              size="large"
-              onPress={() => void handleAccept(movies)}
-            />
+            <FAB icon="close-thick" size="large" onPress={removeFromQueue} />
+            <FAB icon="heart" size="large" onPress={handleAccept} />
           </View>
         </View>
       )}
