@@ -45,8 +45,8 @@ const MovieSwiper = ({ route }: Props) => {
     setMovies((arr) => arr.slice(1));
   };
 
-  const handleAccept = () => {
-    saveMovie(db, firstInQueue.id, false);
+  const handleAccept = (hasWatched: boolean) => {
+    saveMovie(db, firstInQueue.id, hasWatched);
     removeFromQueue();
   };
 
@@ -57,7 +57,17 @@ const MovieSwiper = ({ route }: Props) => {
           <MovieCard movie={firstInQueue} />
           <View style={styles.buttonRow}>
             <FAB icon="close-thick" size="large" onPress={removeFromQueue} />
-            <FAB icon="heart" size="large" onPress={handleAccept} />
+            <FAB
+              style={{ alignSelf: "center" }}
+              icon="check-bold"
+              size="medium"
+              onPress={() => handleAccept(true)}
+            />
+            <FAB
+              icon="heart"
+              size="large"
+              onPress={() => handleAccept(false)}
+            />
           </View>
         </View>
       </>
