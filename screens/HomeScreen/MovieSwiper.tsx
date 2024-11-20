@@ -17,7 +17,6 @@ const MovieSwiper = ({ route }: Props) => {
   const { genres } = route.params;
   const page = useRef(1);
   const [movies, setMovies] = useState<DiscoverMovieResponse["results"]>([]);
-  const [loading, setLoading] = useState(true);
   const db = useSQLiteContext();
   const savedMovies = useMovieStore((state) => state.movies);
   const saveMovie = useMovieStore((state) => state.saveMovie);
@@ -26,15 +25,14 @@ const MovieSwiper = ({ route }: Props) => {
     fetchMovies();
   }, []);
 
-  const fetchMovies = async () => {
-    setLoading(true);
-    const results = await movieService.getMoviesByGenre(genres, page.current);
-    setMovies((arr) => arr.concat(results));
-    setLoading(false);
+  const fetchMovies = () => {
+    movieService
+      .getMoviesByGenre(genres, page.current)
+      .then((res) => setMovies((arr) => arr.concat(res)));
   };
 
   const removeFromQueue = () => {
-    if (movies.length <= 2) {
+    if (movies.length === 2) {
       page.current += 1;
       fetchMovies();
     }
@@ -50,24 +48,14 @@ const MovieSwiper = ({ route }: Props) => {
   const filterMovie = () => {
     const movieId = movies[0].id;
     if (savedMovies.find((movie) => movie.movie_id === movieId)) {
-      console.log(movies[0].title);
       removeFromQueue();
-      return movies[1];
     }
     return movies[0];
   };
 
-  return (
-    <>
-      {loading ? (
-        <View style={styles.loadingIndicator}>
-          <ActivityIndicator
-            animating={true}
-            color={MD2Colors.red800}
-            size={"large"}
-          />
-        </View>
-      ) : (
+  if (movies.length > 0)
+    return (
+      <>
         <View>
           <MovieCard movie={filterMovie()} />
           <View style={styles.buttonRow}>
@@ -75,9 +63,8 @@ const MovieSwiper = ({ route }: Props) => {
             <FAB icon="heart" size="large" onPress={handleAccept} />
           </View>
         </View>
-      )}
-    </>
-  );
+      </>
+    );
 };
 
 const styles = StyleSheet.create({
