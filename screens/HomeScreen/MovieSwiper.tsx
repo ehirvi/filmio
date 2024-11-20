@@ -6,7 +6,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import movieService from "../../services/movieService";
 import MovieCard from "../../components/MovieCard";
-import { ActivityIndicator, FAB, MD2Colors } from "react-native-paper";
+import { ActivityIndicator, FAB, MD2Colors, Tooltip } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
 import useMovieStore from "../../hooks/useStore";
@@ -56,18 +56,33 @@ const MovieSwiper = ({ route }: Props) => {
         <View>
           <MovieCard movie={firstInQueue} />
           <View style={styles.buttonRow}>
-            <FAB icon="close-thick" size="large" onPress={removeFromQueue} />
-            <FAB
-              style={{ alignSelf: "center" }}
-              icon="check-bold"
-              size="medium"
-              onPress={() => handleAccept(true)}
-            />
-            <FAB
-              icon="heart"
-              size="large"
-              onPress={() => handleAccept(false)}
-            />
+            <View>
+              <Tooltip title="Not interested">
+                <FAB
+                  icon="close-thick"
+                  size="large"
+                  onPress={removeFromQueue}
+                />
+              </Tooltip>
+            </View>
+            <View style={{ alignSelf: "center" }}>
+              <Tooltip title="Already seen">
+                <FAB
+                  icon="check-bold"
+                  size="medium"
+                  onPress={() => handleAccept(true)}
+                />
+              </Tooltip>
+            </View>
+            <View>
+              <Tooltip title="Interested">
+                <FAB
+                  icon="heart"
+                  size="large"
+                  onPress={() => handleAccept(false)}
+                />
+              </Tooltip>
+            </View>
           </View>
         </View>
       </>
