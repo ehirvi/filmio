@@ -11,19 +11,19 @@ const MovieList = ({ movies }: Props) => {
   const tabBarHeight = useBottomTabBarHeight();
   if (movies) {
     return (
-      <ScrollView
+      <FlatList
         style={styles.container}
         contentContainerStyle={{
           gap: 10,
           padding: 10,
-          // (tabBarHeight / 2) looks better on iPhone
           paddingBottom: tabBarHeight,
         }}
-      >
-        {movies.map((m) => (
-          <MovieListItem key={m.id} movie={m} />
-        ))}
-      </ScrollView>
+        data={movies}
+        renderItem={({ item }) => <MovieListItem key={item.id} movie={item} />}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={8}
+        updateCellsBatchingPeriod={60}
+      />
     );
   }
 };
