@@ -21,43 +21,40 @@ const MovieSwiper = ({ route }: Props) => {
   const savedMovies = useMovieStore((state) => state.movies);
   const saveMovie = useMovieStore((state) => state.saveMovie);
 
+  const firstInQueue = movies[0];
+
   useEffect(() => {
     fetchMovies();
-  }, []);
+  }, [page.current]);
 
-  const fetchMovies = () => {
-    movieService
-      .getMoviesByGenre(genres, page.current)
-      .then((res) => setMovies((arr) => arr.concat(res)));
+  const fetchMovies = async () => {
+    const res = await movieService.getMoviesByGenre(genres, page.current);
+    const filteredMovies = res.filter(
+      (movie) => !savedMovies.some((saved) => saved.movie_id === movie.id)
+    );
+    if (filteredMovies.length === 0) {
+      page.current++;
+    }
+    setMovies((arr) => [...arr, ...filteredMovies]);
   };
 
   const removeFromQueue = () => {
-    if (movies.length === 2) {
-      page.current += 1;
-      fetchMovies();
+    if (movies.length <= 2) {
+      page.current++;
     }
     setMovies((arr) => arr.slice(1));
   };
 
   const handleAccept = () => {
-    const movieId = movies[0].id;
-    saveMovie(db, movieId, false);
+    saveMovie(db, firstInQueue.id, false);
     removeFromQueue();
-  };
-
-  const filterMovie = () => {
-    const movieId = movies[0].id;
-    if (savedMovies.find((movie) => movie.movie_id === movieId)) {
-      removeFromQueue();
-    }
-    return movies[0];
   };
 
   if (movies.length > 0)
     return (
       <>
         <View>
-          <MovieCard movie={filterMovie()} />
+          <MovieCard movie={firstInQueue} />
           <View style={styles.buttonRow}>
             <FAB icon="close-thick" size="large" onPress={removeFromQueue} />
             <FAB icon="heart" size="large" onPress={handleAccept} />
