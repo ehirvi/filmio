@@ -1,6 +1,6 @@
 import { Card, Modal, Portal, Surface } from "react-native-paper";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
-import { POSTER_URL } from "../utils/constants";
+import { LARGE_POSTER_URL } from "../utils/constants";
 import { DiscoverMovieResponse } from "../utils/types";
 import { parseReleaseYear } from "../utils/helpers";
 import { useMemo, useState } from "react";
@@ -39,7 +39,7 @@ const MovieCard = ({ movie }: Props) => {
           <Card.Content>
             <Surface elevation={3}>
               <Image
-                source={{ uri: `${POSTER_URL}/${movie.poster_path}` }}
+                source={{ uri: `${LARGE_POSTER_URL}/${movie.poster_path}` }}
                 style={styles.image}
               />
             </Surface>

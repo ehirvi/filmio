@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 import { Surface } from "react-native-paper";
 import { Movie } from "../utils/types";
 import { convertMinutesToHours, parseReleaseYear } from "../utils/helpers";
-import { POSTER_URL } from "../utils/constants";
+import { MEDIUM_POSTER_URL } from "../utils/constants";
 import { memo } from "react";
 
 interface Props {
@@ -17,7 +17,7 @@ const MovieListItem = memo(
     return (
       <Surface style={styles.container} elevation={1}>
         <Image
-          source={{ uri: `${POSTER_URL}/${movie.poster_path}` }}
+          source={{ uri: `${MEDIUM_POSTER_URL}/${movie.poster_path}` }}
           style={styles.image}
         />
         <View style={styles.textContainer}>
