@@ -4,7 +4,6 @@ import { Button, Chip } from "react-native-paper";
 import { StatusBar } from "expo-status-bar";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Genre, HomeScreenStackParamlist } from "../../utils/types";
-// import testData from "../../utils/testData";
 import genreService from "../../services/genreService";
 
 type Props = NativeStackScreenProps<HomeScreenStackParamlist, "GenreSelector">;
@@ -18,7 +17,6 @@ const GenreSelector = ({ navigation }: Props) => {
   useEffect(() => {
     const fetchGenres = async () => {
       const genres = await genreService.getAll();
-      // const genres = testData.genres;
       setGenres(genres);
     };
     fetchGenres();

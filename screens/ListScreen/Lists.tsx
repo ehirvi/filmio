@@ -1,8 +1,6 @@
-import { useSQLiteContext } from "expo-sqlite";
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { SegmentedButtons } from "react-native-paper";
-import { getAll } from "../../utils/sqlite";
 import movieService from "../../services/movieService";
 import MovieList from "../../components/MovieList";
 import { Movie } from "../../utils/types";

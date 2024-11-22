@@ -6,7 +6,7 @@ import {
 import { useEffect, useRef, useState } from "react";
 import movieService from "../../services/movieService";
 import MovieCard from "../../components/MovieCard";
-import { ActivityIndicator, FAB, MD2Colors, Tooltip } from "react-native-paper";
+import { FAB, Tooltip } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
 import useMovieStore from "../../hooks/useStore";

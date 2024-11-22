@@ -3,6 +3,11 @@ export type HomeScreenStackParamlist = {
   MovieSwiper: { genres: Genre[] };
 };
 
+export type ListScreenStackParamLst = {
+  Lists: undefined;
+  MovieDetails: { movieId: Movie["id"] };
+};
+
 export interface Genre {
   id: number;
   name: string;
