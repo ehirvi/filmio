@@ -1,18 +1,33 @@
-import { FlatList, Text, View } from "react-native";
-import testData from "../utils/testData";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import ActorListItem from "./ActorListItem";
+import { Actor } from "../utils/types";
 
-const ActorList = () => {
+interface Props {
+  actors: Actor[];
+}
+
+const ActorList = ({ actors }: Props) => {
   return (
     <View>
-      <Text>Cast</Text>
+      <Text>Main Cast</Text>
       <FlatList
+        contentContainerStyle={styles.contentContainer}
         horizontal
-        data={testData.actors}
+        data={actors}
         renderItem={({ item }) => <ActorListItem actor={item} />}
+        removeClippedSubviews={true}
+        maxToRenderPerBatch={8}
+        updateCellsBatchingPeriod={60}
       />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    marginVertical: 10,
+    gap: 10,
+  },
+});
 
 export default ActorList;
