@@ -4,6 +4,9 @@ import movieService from "../services/movieService";
 import { ListScreenStackParamLst, Movie } from "../utils/types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LARGE_POSTER_URL } from "../utils/constants";
+import { convertMinutesToHours } from "../utils/helpers";
+import { Button } from "react-native-paper";
+import ActorList from "../components/ActorList";
 
 type Props = NativeStackScreenProps<ListScreenStackParamLst, "MovieDetails">;
 
@@ -20,6 +23,11 @@ const MovieDetails = ({ route }: Props) => {
   }, []);
 
   if (movie) {
+    const formattedReleaseDate = new Date(
+      movie.release_date
+    ).toLocaleDateString("en-GB");
+    const duration = convertMinutesToHours(movie.runtime);
+
     return (
       <View style={styles.container}>
         <View style={styles.detailsContainer}>
@@ -27,17 +35,36 @@ const MovieDetails = ({ route }: Props) => {
             source={{ uri: `${LARGE_POSTER_URL}/${movie.poster_path}` }}
             style={styles.image}
           />
-          <Text>{movie.title}</Text>
+          <View style={styles.textContainer}>
+            <Text>{movie.title}</Text>
+            <Text>
+              Total duration: {duration.hours} hours {duration.minutes} minutes
+            </Text>
+            <Text>Release date: {formattedReleaseDate}</Text>
+            <Text>{movie.overview}</Text>
+          </View>
         </View>
+        <View>
+          <Button mode="contained">Add to watchlist</Button>
+        </View>
+        <ActorList />
       </View>
     );
   }
 };
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    margin: 15,
+    gap: 15,
+  },
   detailsContainer: {
     flexDirection: "row",
+    gap: 10,
+  },
+  textContainer: {
+    flexShrink: 1,
+    gap: 5,
   },
   image: {
     width: 150,

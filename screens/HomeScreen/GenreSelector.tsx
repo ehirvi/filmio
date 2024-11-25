@@ -23,7 +23,7 @@ const GenreSelector = ({ navigation }: Props) => {
   }, []);
 
   const isSelected = (genre: Genre) => {
-    const found = selectedGenres.find((g) => g.id === genre.id);
+    const found = selectedGenres.some((g) => g.id === genre.id);
     return found;
   };
 
@@ -47,7 +47,7 @@ const GenreSelector = ({ navigation }: Props) => {
             <Chip
               key={g.id}
               onPress={() => handlePress(g)}
-              selected={isSelected(g) ? true : false}
+              selected={isSelected(g)}
               showSelectedOverlay
             >
               {g.name}

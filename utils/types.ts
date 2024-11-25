@@ -13,6 +13,14 @@ export interface Genre {
   name: string;
 }
 
+export interface Actor {
+  id: number;
+  name: string;
+  profile_path: string;
+  character: string;
+  order: number;
+}
+
 /**
  * The response format of the /discover/ API endpoint
  */
@@ -46,8 +54,6 @@ export interface Movie {
   runtime: number;
   genres: Genre[];
   poster_path: string;
-  // production_companies
-  // production_countries
 }
 
 /** Data type of the Movie table stored in SQLite */
