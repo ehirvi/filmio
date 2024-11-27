@@ -5,6 +5,7 @@ import ListScreen from "./screens/ListScreen";
 import HomeScreen from "./screens/HomeScreen";
 import { SQLiteProvider } from "expo-sqlite";
 import { initDb } from "./utils/sqlite";
+import SearchScreen from "./screens/SearchScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,6 +26,9 @@ export default function App() {
                   case "HomeScreen":
                     iconName = "home";
                     break;
+                  case "SearchScreen":
+                    iconName = "movie-search";
+                    break;
                   case "ListScreen":
                     iconName = "view-list";
                     break;
@@ -40,6 +44,11 @@ export default function App() {
               name="HomeScreen"
               component={HomeScreen}
               options={{ title: "Home" }}
+            />
+            <Tab.Screen
+              name="SearchScreen"
+              component={SearchScreen}
+              options={{ title: "Search" }}
             />
             <Tab.Screen
               name="ListScreen"

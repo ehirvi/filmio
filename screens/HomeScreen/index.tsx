@@ -17,11 +17,11 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <Stack.Navigator initialRouteName="GenreSelector">
+    <Stack.Navigator>
       <Stack.Screen
         name="GenreSelector"
         component={GenreSelector}
-        options={{ title: "Select genres" }}
+        options={{ title: "Home" }}
       />
       <Stack.Screen
         name="MovieSwiper"
