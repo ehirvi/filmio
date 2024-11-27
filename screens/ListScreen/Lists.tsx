@@ -23,7 +23,8 @@ const Lists = () => {
           setFilteredMovies([]);
           return;
         }
-        const movieIds = filtered.map((movie) => movie.movie_id);
+        const sortedByLatest = [...filtered].reverse();
+        const movieIds = sortedByLatest.map((movie) => movie.movie_id);
         const result = await movieService.findManyById(movieIds);
         setFilteredMovies(result);
       }

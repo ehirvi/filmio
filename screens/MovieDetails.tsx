@@ -19,7 +19,7 @@ const MovieDetails = ({ route }: Props) => {
   );
   const saveMovie = useMovieStore((state) => state.saveMovie);
   const removeMovie = useMovieStore((state) => state.removeMovie);
-  const updateWatchStatus = useMovieStore((state) => state.updateWatchStatus);
+  const setMovieAsWatched = useMovieStore((state) => state.setMovieAsWatched);
   const [actors, setActors] = useState<Actor[]>();
   const [movie, setMovie] = useState<Movie>();
   const db = useSQLiteContext();
@@ -50,10 +50,12 @@ const MovieDetails = ({ route }: Props) => {
   const handleWatchStatus = () => {
     if (isSaved) {
       if (isSaved.has_watched === 0) {
-        updateWatchStatus(db, isSaved, true);
+        setMovieAsWatched(db, movieId);
       } else {
         removeMovie(db, movieId);
       }
+    } else {
+      saveMovie(db, movieId, true);
     }
   };
 
@@ -92,16 +94,6 @@ const MovieDetails = ({ route }: Props) => {
                 ? "Mark as watched"
                 : "Mark as unwatched"}
             </Button>
-            {/* <Button mode="contained">
-              {isSaved === undefined
-                ? "Add to watchlist"
-                : isSaved.has_watched === 0
-                ? "Remove from watchlist"
-                : "Mark as unwatched"}
-            </Button>
-            {isSaved && isSaved.has_watched === 0 && (
-              <Button mode="contained">Mark as watched</Button>
-            )} */}
           </View>
           <ActorList actors={actors} />
         </View>
