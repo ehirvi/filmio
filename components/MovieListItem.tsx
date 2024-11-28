@@ -19,7 +19,6 @@ type ListScreenNavigationProp = NativeStackNavigationProp<
 const MovieListItem = memo(
   ({ movie }: Props) => {
     const releaseYear = parseReleaseYear(movie.release_date);
-    const duration = convertMinutesToHours(movie.runtime);
     const navigation = useNavigation<ListScreenNavigationProp>();
 
     const openDetails = () => {
@@ -36,9 +35,7 @@ const MovieListItem = memo(
           <View style={styles.textContainer}>
             <Text>{movie.title}</Text>
             <Text>Released: {releaseYear}</Text>
-            <Text>
-              Duration: {duration.hours}h {duration.minutes}m
-            </Text>
+            <Text>Rating: {movie.vote_average.toFixed(1)}/10</Text>
           </View>
         </Surface>
       </Pressable>

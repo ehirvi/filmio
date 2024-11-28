@@ -1,12 +1,12 @@
 import { Card, Modal, Portal, Surface } from "react-native-paper";
 import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { LARGE_POSTER_URL } from "../utils/constants";
-import { DiscoverMovieResponse } from "../utils/types";
+import { MovieSearchResult } from "../utils/types";
 import { parseReleaseYear } from "../utils/helpers";
 import { useMemo, useState } from "react";
 
 interface Props {
-  movie: DiscoverMovieResponse["results"][number];
+  movie: MovieSearchResult["results"][number];
 }
 
 const MovieCard = ({ movie }: Props) => {

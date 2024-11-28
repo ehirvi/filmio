@@ -1,12 +1,11 @@
 import axios from "axios";
 import { API_KEY, API_URL } from "../utils/constants";
-import { Actor, DiscoverMovieResponse, Genre } from "../utils/types";
+import { Actor, Genre, MovieSearchResult } from "../utils/types";
 
 const getMoviesByGenre = async (genres: Genre[], page = 1) => {
-  const url = `${API_URL}discover/movie`;
   const genresStringified = genres.map((g) => g.id).join(",");
-  const query = `?api_key=${API_KEY}&page=${page}&with_genres=${genresStringified}&sort_by=vote_count.desc`;
-  const { data } = await axios.get<DiscoverMovieResponse>(`${url + query}`);
+  const url = `${API_URL}discover/movie?api_key=${API_KEY}&page=${page}&with_genres=${genresStringified}&sort_by=vote_count.desc`;
+  const { data } = await axios.get<MovieSearchResult>(url);
   return data.results;
 };
 

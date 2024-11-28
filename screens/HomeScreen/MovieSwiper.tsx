@@ -1,8 +1,5 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import {
-  DiscoverMovieResponse,
-  HomeScreenStackParamlist,
-} from "../../utils/types";
+import { MovieSearchResult, HomeScreenStackParamlist } from "../../utils/types";
 import { useEffect, useRef, useState } from "react";
 import movieService from "../../services/movieService";
 import MovieCard from "../../components/MovieCard";
@@ -16,7 +13,7 @@ type Props = NativeStackScreenProps<HomeScreenStackParamlist, "MovieSwiper">;
 const MovieSwiper = ({ route }: Props) => {
   const { genres } = route.params;
   const page = useRef(1);
-  const [movies, setMovies] = useState<DiscoverMovieResponse["results"]>([]);
+  const [movies, setMovies] = useState<MovieSearchResult["results"]>([]);
   const db = useSQLiteContext();
   const savedMovies = useMovieStore((state) => state.movies);
   const saveMovie = useMovieStore((state) => state.saveMovie);
