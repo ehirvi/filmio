@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import movieService from "../services/movieService";
-import { Actor, ListScreenStackParamLst, Movie } from "../utils/types";
+import {
+  Actor,
+  ListScreenStackParamLst,
+  MovieTopDetails,
+} from "../utils/types";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LARGE_POSTER_URL } from "../utils/constants";
 import { convertMinutesToHours } from "../utils/helpers";
@@ -21,7 +25,7 @@ const MovieDetails = ({ route }: Props) => {
   const removeMovie = useMovieStore((state) => state.removeMovie);
   const setMovieAsWatched = useMovieStore((state) => state.setMovieAsWatched);
   const [actors, setActors] = useState<Actor[]>();
-  const [movie, setMovie] = useState<Movie>();
+  const [movie, setMovie] = useState<MovieTopDetails>();
   const db = useSQLiteContext();
 
   useEffect(() => {
@@ -66,7 +70,7 @@ const MovieDetails = ({ route }: Props) => {
     const duration = convertMinutesToHours(movie.runtime);
 
     return (
-      <ScrollView>
+      <ScrollView style={{ flex: 1 }}>
         <View style={styles.container}>
           <Text style={styles.title}>{movie.title}</Text>
           <View style={styles.detailsContainer}>

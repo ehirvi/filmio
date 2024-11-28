@@ -1,14 +1,12 @@
-import { FlatList, ScrollView, StyleSheet } from "react-native";
+import { FlatList,  StyleSheet } from "react-native";
 import { Movie } from "../utils/types";
 import MovieListItem from "./MovieListItem";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 interface Props {
   movies: Movie[];
 }
 
 const MovieList = ({ movies }: Props) => {
-  const tabBarHeight = useBottomTabBarHeight();
   if (movies) {
     return (
       <FlatList
@@ -16,7 +14,6 @@ const MovieList = ({ movies }: Props) => {
         contentContainerStyle={{
           gap: 10,
           padding: 10,
-          paddingBottom: tabBarHeight,
         }}
         data={movies}
         renderItem={({ item }) => <MovieListItem key={item.id} movie={item} />}
@@ -31,7 +28,6 @@ const MovieList = ({ movies }: Props) => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 10,
-    paddingBottom: 100,
   },
 });
 

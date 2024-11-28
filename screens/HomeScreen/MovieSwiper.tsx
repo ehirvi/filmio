@@ -49,47 +49,40 @@ const MovieSwiper = ({ route }: Props) => {
 
   if (movies.length > 0)
     return (
-      <>
-        <View>
-          <MovieCard movie={firstInQueue} />
-          <View style={styles.buttonRow}>
-            <View>
-              <Tooltip title="Not interested">
-                <FAB
-                  icon="close-thick"
-                  size="large"
-                  onPress={removeFromQueue}
-                />
-              </Tooltip>
-            </View>
-            <View style={{ alignSelf: "center" }}>
-              <Tooltip title="Already seen">
-                <FAB
-                  icon="check-bold"
-                  size="medium"
-                  onPress={() => handleAccept(true)}
-                />
-              </Tooltip>
-            </View>
-            <View>
-              <Tooltip title="Interested">
-                <FAB
-                  icon="heart"
-                  size="large"
-                  onPress={() => handleAccept(false)}
-                />
-              </Tooltip>
-            </View>
+      <View style={styles.container}>
+        <MovieCard movie={firstInQueue} />
+        <View style={styles.buttonRow}>
+          <View>
+            <Tooltip title="Not interested">
+              <FAB icon="close-thick" size="large" onPress={removeFromQueue} />
+            </Tooltip>
+          </View>
+          <View style={{ alignSelf: "center" }}>
+            <Tooltip title="Already seen">
+              <FAB
+                icon="check-bold"
+                size="medium"
+                onPress={() => handleAccept(true)}
+              />
+            </Tooltip>
+          </View>
+          <View>
+            <Tooltip title="Interested">
+              <FAB
+                icon="heart"
+                size="large"
+                onPress={() => handleAccept(false)}
+              />
+            </Tooltip>
           </View>
         </View>
-      </>
+      </View>
     );
 };
 
 const styles = StyleSheet.create({
-  loadingIndicator: {
+  container: {
     flex: 1,
-    justifyContent: "center",
   },
   buttonRow: {
     flexDirection: "row",

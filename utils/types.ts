@@ -5,12 +5,12 @@ export type HomeScreenStackParamlist = {
 
 export type SearchScreenStackParamList = {
   Search: undefined;
-  MovieDetails: { movieId: Movie["id"] };
+  MovieDetails: { movieId: MovieTopDetails["id"] };
 };
 
 export type ListScreenStackParamLst = {
   Lists: undefined;
-  MovieDetails: { movieId: Movie["id"] };
+  MovieDetails: { movieId: MovieTopDetails["id"] };
 };
 
 export interface Genre {
@@ -26,7 +26,7 @@ export interface Actor {
   order: number;
 }
 
-export interface MovieDetails {
+export interface MovieTopDetails {
   adult: boolean;
   backdrop_path: string;
   belongs_to_collection: string;
@@ -88,7 +88,7 @@ export interface MovieSearchResult {
   total_results: number;
 }
 
-export type Movie = MovieSearchResult["results"][number] | MovieDetails;
+export type Movie = MovieSearchResult["results"][number] | MovieTopDetails;
 
 /** Data type of the Movie table stored in SQLite */
 export interface LocalMovieData {

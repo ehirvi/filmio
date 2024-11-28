@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { Searchbar } from "react-native-paper";
 import { MovieSearchResult } from "../../utils/types";
 import searchService from "../../services/searchService";
 import MovieList from "../../components/MovieList";
+import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 const Search = () => {
   const [textInput, setTextInput] = useState("");
@@ -12,6 +13,7 @@ const Search = () => {
     useState<MovieSearchResult["results"]>();
   const [searchResultPages, setSearchResultPages] =
     useState<MovieSearchResult["total_pages"]>();
+  const tabBarHeight = useBottomTabBarHeight();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -39,10 +41,9 @@ const Search = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <Searchbar
         mode="view"
-        elevation={4}
         loading={false}
         placeholder="Type..."
         value={textInput}
@@ -54,5 +55,12 @@ const Search = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 10,
+  },
+});
 
 export default Search;
