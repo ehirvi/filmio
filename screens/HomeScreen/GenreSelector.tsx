@@ -63,6 +63,7 @@ const GenreSelector = ({ navigation }: Props) => {
           <View style={styles.genreList}>
             {genres.map((g) => (
               <Chip
+                style={styles.chip}
                 selected={isSelected(g)}
                 elevated={true}
                 key={g.id}
@@ -92,8 +93,14 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   genreList: {
+    flexDirection: "row",
+    justifyContent: "center",
+    flexWrap: "wrap",
     gap: 10,
     margin: 10,
+  },
+  chip: {
+    width:  "40%"
   },
   button: {
     margin: 10,

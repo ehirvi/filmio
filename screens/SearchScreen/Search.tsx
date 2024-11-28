@@ -1,6 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { ActivityIndicator, Searchbar, useTheme } from "react-native-paper";
+import {
+  ActivityIndicator,
+  Searchbar,
+  Text,
+  useTheme,
+} from "react-native-paper";
 import { MovieSearchResult } from "../../utils/types";
 import searchService from "../../services/searchService";
 import MovieList from "../../components/MovieList";
@@ -11,15 +16,12 @@ const Search = () => {
   const page = useRef(1);
   const [searchResultMovies, setSearchResultMovies] =
     useState<MovieSearchResult["results"]>();
-  const [searchResultPages, setSearchResultPages] =
-    useState<MovieSearchResult["total_pages"]>();
   const theme = useTheme();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (textInput.length === 0) {
         setSearchResultMovies(undefined);
-        setSearchResultPages(undefined);
       } else {
         void fetchResults(textInput);
       }
@@ -36,7 +38,6 @@ const Search = () => {
       );
       setLoading(false);
       setSearchResultMovies(sortedMovies);
-      setSearchResultPages(res.total_pages);
     }
   };
 
@@ -61,8 +62,13 @@ const Search = () => {
           animating={loading}
         />
       )}
-      {searchResultMovies && searchResultPages && searchResultPages > 0 && (
+      {searchResultMovies && searchResultMovies.length > 0 && (
         <MovieList movies={searchResultMovies} />
+      )}
+      {searchResultMovies && searchResultMovies.length === 0 && (
+        <Text variant="bodyLarge" style={{ ...styles.text }}>
+          No results were found
+        </Text>
       )}
     </View>
   );
@@ -77,6 +83,9 @@ const styles = StyleSheet.create({
   },
   loadingIndicator: {
     margin: "auto",
+  },
+  text: {
+    alignSelf: "center",
   },
 });
 
