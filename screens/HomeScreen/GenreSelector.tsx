@@ -11,7 +11,6 @@ type Props = NativeStackScreenProps<HomeScreenStackParamlist, "GenreSelector">;
 const GenreSelector = ({ navigation }: Props) => {
   const [genres, setGenres] = useState<Genre[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<Genre[]>([]);
-  const [buttonDisabled, setButtonDisabled] = useState(true);
   const theme = useTheme();
 
   console.log(selectedGenres);

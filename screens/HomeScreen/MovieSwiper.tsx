@@ -3,7 +3,7 @@ import { MovieSearchResult, HomeScreenStackParamlist } from "../../utils/types";
 import { useEffect, useRef, useState } from "react";
 import movieService from "../../services/movieService";
 import MovieCard from "../../components/MovieCard";
-import { FAB, Tooltip } from "react-native-paper";
+import { FAB, Tooltip, useTheme } from "react-native-paper";
 import { StyleSheet, View } from "react-native";
 import { useSQLiteContext } from "expo-sqlite";
 import useMovieStore from "../../hooks/useStore";
@@ -17,6 +17,7 @@ const MovieSwiper = ({ route }: Props) => {
   const db = useSQLiteContext();
   const savedMovies = useMovieStore((state) => state.movies);
   const saveMovie = useMovieStore((state) => state.saveMovie);
+  const theme = useTheme();
 
   const firstInQueue = movies[0];
 
@@ -49,7 +50,12 @@ const MovieSwiper = ({ route }: Props) => {
 
   if (movies.length > 0)
     return (
-      <View style={styles.container}>
+      <View
+        style={{
+          ...styles.container,
+          backgroundColor: theme.colors.background,
+        }}
+      >
         <MovieCard movie={firstInQueue} />
         <View style={styles.buttonRow}>
           <View>
@@ -60,6 +66,7 @@ const MovieSwiper = ({ route }: Props) => {
           <View style={{ alignSelf: "center" }}>
             <Tooltip title="Already seen">
               <FAB
+                variant="tertiary"
                 icon="check-bold"
                 size="medium"
                 onPress={() => handleAccept(true)}
