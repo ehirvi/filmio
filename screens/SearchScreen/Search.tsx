@@ -4,7 +4,6 @@ import { Searchbar } from "react-native-paper";
 import { MovieSearchResult } from "../../utils/types";
 import searchService from "../../services/searchService";
 import MovieList from "../../components/MovieList";
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs";
 
 const Search = () => {
   const [textInput, setTextInput] = useState("");
@@ -13,7 +12,6 @@ const Search = () => {
     useState<MovieSearchResult["results"]>();
   const [searchResultPages, setSearchResultPages] =
     useState<MovieSearchResult["total_pages"]>();
-  const tabBarHeight = useBottomTabBarHeight();
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
