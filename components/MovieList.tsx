@@ -1,4 +1,4 @@
-import { FlatList,  StyleSheet } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import { Movie } from "../utils/types";
 import MovieListItem from "./MovieListItem";
 
