@@ -1,5 +1,4 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text, View } from "react-native";
 import Search from "./Search";
 import MovieDetails from "../MovieDetails";
 import { SearchScreenStackParamList } from "../../utils/types";

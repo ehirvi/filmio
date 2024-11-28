@@ -1,6 +1,11 @@
 import axios from "axios";
 import { API_KEY, API_URL } from "../utils/constants";
-import { Actor, Genre, Movie, MovieSearchResult } from "../utils/types";
+import {
+  Actor,
+  Genre,
+  MovieSearchResult,
+  MovieTopDetails,
+} from "../utils/types";
 
 const getMoviesByGenre = async (genres: Genre[], page = 1) => {
   const genresStringified = genres.map((g) => g.id).join(",");
@@ -17,12 +22,12 @@ const getMoviesByGenre = async (genres: Genre[], page = 1) => {
 
 const findOneById = async (id: number) => {
   const url = `${API_URL}movie/${id}?api_key=${API_KEY}`;
-  const { data } = await axios.get<Movie>(url);
+  const { data } = await axios.get<MovieTopDetails>(url);
   return data;
 };
 
 const findManyById = async (ids: number[]) => {
-  const promises: Promise<Movie>[] = [];
+  const promises: Promise<MovieTopDetails>[] = [];
   ids.forEach((id) => {
     promises.push(findOneById(id));
   });

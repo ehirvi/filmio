@@ -1,6 +1,7 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import { Actor } from "../utils/types";
 import { MEDIUM_PROFILE_URL } from "../utils/constants";
+import { Text } from "react-native-paper";
 
 interface Props {
   actor: Actor;
@@ -14,8 +15,8 @@ const ActorListItem = ({ actor }: Props) => {
         source={{ uri: `${MEDIUM_PROFILE_URL}/${actor.profile_path}` }}
       />
       <View style={styles.textContainer}>
-        <Text>{actor.name}</Text>
-        <Text>{actor.character}</Text>
+        <Text variant="labelMedium">{actor.name}</Text>
+        <Text variant="bodySmall">{actor.character}</Text>
       </View>
     </View>
   );

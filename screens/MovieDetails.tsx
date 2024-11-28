@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import { Image, ScrollView, StyleSheet, View } from "react-native";
 import movieService from "../services/movieService";
 import {
   Actor,
@@ -9,7 +9,7 @@ import {
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { LARGE_POSTER_URL } from "../utils/constants";
 import { convertMinutesToHours } from "../utils/helpers";
-import { Button } from "react-native-paper";
+import { Button, Text, useTheme } from "react-native-paper";
 import ActorList from "../components/ActorList";
 import useMovieStore from "../hooks/useStore";
 import { useSQLiteContext } from "expo-sqlite";
@@ -27,6 +27,7 @@ const MovieDetails = ({ route }: Props) => {
   const [actors, setActors] = useState<Actor[]>();
   const [movie, setMovie] = useState<MovieTopDetails>();
   const db = useSQLiteContext();
+  const theme = useTheme();
 
   useEffect(() => {
     const fetchActors = async () => {
@@ -66,22 +67,26 @@ const MovieDetails = ({ route }: Props) => {
   if (movie && actors) {
     const formattedReleaseDate = new Date(
       movie.release_date
-    ).toLocaleDateString("en-GB");
+    ).toLocaleDateString("fi-FI");
     const duration = convertMinutesToHours(movie.runtime);
 
     return (
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1, backgroundColor: theme.colors.background }}>
         <View style={styles.container}>
-          <Text style={styles.title}>{movie.title}</Text>
+          <Text variant="titleMedium" style={styles.title}>
+            {movie.title}
+          </Text>
           <View style={styles.detailsContainer}>
             <Image
               source={{ uri: `${LARGE_POSTER_URL}/${movie.poster_path}` }}
               style={styles.image}
             />
             <View style={styles.textContainer}>
-              <Text>"{movie.overview}"</Text>
-              <Text>Release date: {formattedReleaseDate}</Text>
-              <Text>
+              <Text variant="bodyMedium">"{movie.overview}"</Text>
+              <Text variant="bodyMedium">
+                Release date: {formattedReleaseDate}
+              </Text>
+              <Text variant="bodyMedium">
                 Total duration: {duration.hours} hours {duration.minutes}{" "}
                 minutes
               </Text>
@@ -123,6 +128,7 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   image: {
+    borderRadius: 1,
     width: 150,
     height: "auto",
     aspectRatio: 2 / 3,
