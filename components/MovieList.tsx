@@ -10,11 +10,7 @@ const MovieList = ({ movies }: Props) => {
   if (movies) {
     return (
       <FlatList
-        style={styles.container}
-        contentContainerStyle={{
-          gap: 10,
-          padding: 10,
-        }}
+        contentContainerStyle={styles.contentContainer}
         data={movies}
         renderItem={({ item }) => <MovieListItem key={item.id} movie={item} />}
         removeClippedSubviews={true}
@@ -26,8 +22,9 @@ const MovieList = ({ movies }: Props) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    marginTop: 10,
+  contentContainer: {
+    gap: 10,
+    padding: 10,
   },
 });
 

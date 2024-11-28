@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import { SegmentedButtons } from "react-native-paper";
+import { SegmentedButtons, useTheme } from "react-native-paper";
 import movieService from "../../services/movieService";
 import MovieList from "../../components/MovieList";
 import { Movie } from "../../utils/types";
@@ -10,6 +10,7 @@ const Lists = () => {
   const [listType, setListType] = useState("watch");
   const [filteredMovies, setFilteredMovies] = useState<Movie[]>();
   const movies = useMovieStore((state) => state.movies);
+  const theme = useTheme();
 
   useEffect(() => {
     const getMovies = async () => {
@@ -34,18 +35,23 @@ const Lists = () => {
   }, [movies, listType]);
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{ ...styles.container, backgroundColor: theme.colors.background }}
+    >
       <SegmentedButtons
+        style={styles.segmentContainer}
         value={listType}
         onValueChange={setListType}
         buttons={[
           {
             value: "watch",
             label: "I want to watch",
+            icon: "heart",
           },
           {
             value: "watched",
             label: "I have watched",
+            icon: "check-bold",
           },
         ]}
       />
@@ -57,6 +63,8 @@ const Lists = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  segmentContainer: {
     margin: 10,
   },
 });
