@@ -8,12 +8,12 @@ import {
 } from "react-native-paper";
 import { Image, Pressable, StyleSheet, View } from "react-native";
 import { LARGE_POSTER_URL } from "../utils/constants";
-import { MovieSearchResult } from "../utils/types";
+import { Movie } from "../utils/types";
 import { parseReleaseYear } from "../utils/helpers";
 import { useMemo, useState } from "react";
 
 interface Props {
-  movie: MovieSearchResult["results"][number];
+  movie: Movie;
 }
 
 const MovieCard = ({ movie }: Props) => {

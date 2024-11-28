@@ -18,7 +18,9 @@ const GenreSelector = ({ navigation }: Props) => {
   useEffect(() => {
     const fetchGenres = async () => {
       const genres = await genreService.getAll();
-      setGenres(genres);
+      if (genres) {
+        setGenres(genres);
+      }
     };
     fetchGenres();
   }, []);

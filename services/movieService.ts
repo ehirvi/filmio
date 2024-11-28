@@ -1,27 +1,39 @@
 import axios from "axios";
 import { API_KEY, API_URL } from "../utils/constants";
-import { Actor, Genre, MovieSearchResult } from "../utils/types";
+import { Actor, Genre, Movie, MovieSearchResult } from "../utils/types";
 
 const getMoviesByGenre = async (genres: Genre[], page = 1) => {
   const genresStringified = genres.map((g) => g.id).join(",");
   const url = `${API_URL}discover/movie?api_key=${API_KEY}&page=${page}&with_genres=${genresStringified}&sort_by=vote_count.desc`;
-  const { data } = await axios.get<MovieSearchResult>(url);
-  return data.results;
+  try {
+    const { data } = await axios.get<MovieSearchResult>(url);
+    return data.results;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error("Error fetching movies by gender:", err.message);
+    }
+  }
 };
 
 const findOneById = async (id: number) => {
   const url = `${API_URL}movie/${id}?api_key=${API_KEY}`;
-  const { data } = await axios.get(url);
+  const { data } = await axios.get<Movie>(url);
   return data;
 };
 
 const findManyById = async (ids: number[]) => {
-  const promises: Promise<any>[] = [];
+  const promises: Promise<Movie>[] = [];
   ids.forEach((id) => {
     promises.push(findOneById(id));
   });
-  const data = await Promise.all(promises);
-  return data;
+  try {
+    const data = await Promise.all(promises);
+    return data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error("Error fetching movies:", err.message);
+    }
+  }
 };
 
 const getCastOfMovie = async (id: number) => {
@@ -30,7 +42,9 @@ const getCastOfMovie = async (id: number) => {
     const { data } = await axios.get<{ cast: Actor[] }>(url);
     return data;
   } catch (err: unknown) {
-    console.error(err);
+    if (err instanceof Error) {
+      console.error("Error fetching movie cast:", err.message);
+    }
   }
 };
 

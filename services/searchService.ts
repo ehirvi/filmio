@@ -4,8 +4,14 @@ import { MovieSearchResult } from "../utils/types";
 
 const getResultPage = async (query: string, page = 1) => {
   const url = `${API_URL}search/movie?api_key=${API_KEY}&query=${query}&page=${page}`;
-  const { data } = await axios.get<MovieSearchResult>(url);
-  return data;
+  try {
+    const { data } = await axios.get<MovieSearchResult>(url);
+    return data;
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error("Error fetching search results:", err.message);
+    }
+  }
 };
 
 export default { getResultPage };

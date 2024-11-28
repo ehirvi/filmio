@@ -27,13 +27,15 @@ const MovieSwiper = ({ route }: Props) => {
 
   const fetchMovies = async () => {
     const res = await movieService.getMoviesByGenre(genres, page.current);
-    const filteredMovies = res.filter(
-      (movie) => !savedMovies.some((saved) => saved.movie_id === movie.id)
-    );
-    if (filteredMovies.length === 0) {
-      page.current++;
+    if (res) {
+      const filteredMovies = res.filter(
+        (movie) => !savedMovies.some((saved) => saved.movie_id === movie.id)
+      );
+      if (filteredMovies.length === 0) {
+        page.current++;
+      }
+      setMovies((arr) => [...arr, ...filteredMovies]);
     }
-    setMovies((arr) => [...arr, ...filteredMovies]);
   };
 
   const removeFromQueue = () => {

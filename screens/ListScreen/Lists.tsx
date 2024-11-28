@@ -8,8 +8,7 @@ import useMovieStore from "../../hooks/useStore";
 
 const Lists = () => {
   const [listType, setListType] = useState("watch");
-  // FIX THIS TYPE
-  const [filteredMovies, setFilteredMovies] = useState<ArrayLike<any>>();
+  const [filteredMovies, setFilteredMovies] = useState<Movie[]>();
   const movies = useMovieStore((state) => state.movies);
 
   useEffect(() => {
@@ -25,8 +24,10 @@ const Lists = () => {
         }
         const sortedByLatest = [...filtered].reverse();
         const movieIds = sortedByLatest.map((movie) => movie.movie_id);
-        const result = await movieService.findManyById(movieIds);
-        setFilteredMovies(result);
+        const res = await movieService.findManyById(movieIds);
+        if (res) {
+          setFilteredMovies(res);
+        }
       }
     };
     getMovies();
@@ -48,8 +49,7 @@ const Lists = () => {
           },
         ]}
       />
-      {/* FIX TYPE */}
-      <MovieList movies={filteredMovies as Movie[]} />
+      {filteredMovies && <MovieList movies={filteredMovies} />}
     </View>
   );
 };

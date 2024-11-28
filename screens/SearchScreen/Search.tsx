@@ -30,12 +30,14 @@ const Search = () => {
   const fetchResults = async (query: string) => {
     setLoading(true);
     const res = await searchService.getResultPage(query, page.current);
-    const sortedMovies = [...res.results].sort(
-      (a, b) => b.vote_count - a.vote_count
-    );
-    setLoading(false);
-    setSearchResultMovies(sortedMovies);
-    setSearchResultPages(res.total_pages);
+    if (res) {
+      const sortedMovies = [...res.results].sort(
+        (a, b) => b.vote_count - a.vote_count
+      );
+      setLoading(false);
+      setSearchResultMovies(sortedMovies);
+      setSearchResultPages(res.total_pages);
+    }
   };
 
   const handleSearch = (text: string) => {

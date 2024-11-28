@@ -5,7 +5,7 @@ import { Actor } from "../utils/types";
 interface Props {
   actors: Actor[];
 }
-// MEMOIZE
+
 const ActorList = ({ actors }: Props) => {
   return (
     <View>
