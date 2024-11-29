@@ -55,7 +55,7 @@ const GenreSelector = ({ navigation }: Props) => {
         }}
       >
         <View style={styles.container}>
-          <StatusBar style="auto" />
+          <StatusBar style="light" />
           <Text variant="bodyLarge" style={styles.text}>
             What type of a movie are you interested in watching? Select one or
             multiple genres and continue
