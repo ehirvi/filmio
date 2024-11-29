@@ -22,7 +22,13 @@ Select genres you are interested in, swipe through a never ending list of movies
 - Expo
 - Zustand
 - SQLite
-- Real-time API by TMDB 
+- Real-time API by TMDB
+
+#### Misc
+
+- Axios
+- React Navigation
+- React Native Paper
 
 ## Setup
 
